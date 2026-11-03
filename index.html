@@ -17,12 +17,15 @@
 
   <header>
     <h1>Plant Care Guide</h1>
-    <p>What plant do you have? Find it below and see how to take care of it.</p>
+    <p>What plant do you have? Search for it below and see how to take care of it.</p>
   </header>
 
   <main>
     <section id="plants">
       <h2>Plants</h2>
+
+      <input type="text" id="search" placeholder="Search a plant, e.g. monstera">
+      <p id="no-result">No plant found, try another name.</p>
 
       <!-- copied from database.sql for now, later they should come from the database -->
       <div class="plant-list">
@@ -124,5 +127,6 @@
     <p>&copy; 2026 Sara Razavi</p>
   </footer>
 
+  <script src="script.js"></script>
 </body>
 </html>
