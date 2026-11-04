@@ -156,3 +156,26 @@ footer {
 #not-found {
   display: none;
 }
+
+.note {
+  font-size: 14px;
+  color: #777;
+}
+
+.info label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+#last-watered {
+  padding: 6px;
+  font-size: 15px;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+}
+
+#next-watering {
+  font-weight: bold;
+  color: #2e5e3e;
+}

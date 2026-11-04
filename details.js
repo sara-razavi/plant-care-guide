@@ -12,6 +12,15 @@ for (let i = 0; i < plants.length; i++) {
   }
 }
 
+function wateringText(days) {
+  if (days == 7) {
+    return "Once a week";
+  } else if (days == 14) {
+    return "Every 2 weeks";
+  }
+  return "Every " + days + " days";
+}
+
 // wrong or missing name in the url
 if (plant == null) {
   document.title = "Plant not found - Plant Care Guide";
@@ -24,4 +33,33 @@ if (plant == null) {
   document.getElementById("sci-name").textContent = plant.scientific_name;
   document.getElementById("description").textContent = plant.description;
   document.getElementById("care").textContent = plant.care_instructions;
+
+  document.getElementById("water-amount").textContent = plant.water_amount;
+  document.getElementById("watering-days").textContent = wateringText(plant.watering_days);
 }
+
+// next watering, from the day it was last watered
+const lastWatered = document.getElementById("last-watered");
+const nextWatering = document.getElementById("next-watering");
+
+lastWatered.addEventListener("change", function () {
+  if (lastWatered.value == "") {
+    nextWatering.textContent = "";
+    return;
+  }
+
+  const last = new Date(lastWatered.value);
+  const next = new Date(last);
+  next.setDate(next.getDate() + plant.watering_days);
+
+  const today = new Date();
+  const daysLeft = Math.ceil((next - today) / (1000 * 60 * 60 * 24));
+
+  if (daysLeft > 0) {
+    nextWatering.textContent = "Next watering: " + next.toDateString() + " (in " + daysLeft + " days)";
+  } else if (daysLeft == 0) {
+    nextWatering.textContent = "Water it today!";
+  } else {
+    nextWatering.textContent = "Watering is " + (-daysLeft) + " days late, water it now!";
+  }
+});
