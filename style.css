@@ -152,3 +152,7 @@ footer {
   border: 1px solid #ddd;
   border-radius: 8px;
 }
+
+#not-found {
+  display: none;
+}

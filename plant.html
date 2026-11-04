@@ -24,15 +24,23 @@
   <main class="details">
     <a href="index.html" class="back">&larr; Back to all plants</a>
 
-    <section class="info">
-      <h2>About</h2>
-      <p id="description"></p>
+    <!-- only shown when the name in the url is wrong -->
+    <section id="not-found" class="info">
+      <h2>Sorry!</h2>
+      <p>This plant isn't in the guide. Go back and pick one from the list.</p>
     </section>
 
-    <section class="info">
-      <h2>Basic Care</h2>
-      <p id="care"></p>
-    </section>
+    <div id="plant-info">
+      <section class="info">
+        <h2>About</h2>
+        <p id="description"></p>
+      </section>
+
+      <section class="info">
+        <h2>Basic Care</h2>
+        <p id="care"></p>
+      </section>
+    </div>
   </main>
 
   <footer>
