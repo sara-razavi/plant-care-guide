@@ -105,6 +105,16 @@ h2 {
   margin-top: 0;
 }
 
+.plant-card a {
+  color: #2e5e3e;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.plant-card a:hover {
+  text-decoration: underline;
+}
+
 #tips ul {
   padding-left: 20px;
 }
@@ -118,4 +128,27 @@ footer {
   padding: 15px;
   background-color: #2e5e3e;
   color: white;
+}
+
+/* details page */
+.details {
+  max-width: 800px;
+}
+
+.back {
+  color: #2e5e3e;
+  text-decoration: none;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+.info {
+  background-color: white;
+  padding: 5px 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
 }
