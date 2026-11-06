@@ -44,6 +44,17 @@ if (plant == null) {
   document.getElementById("light").textContent = plant.light;
   document.getElementById("temperature").textContent = plant.min_temp + " to " + plant.max_temp + " °C (" +
     toFahrenheit(plant.min_temp) + " to " + toFahrenheit(plant.max_temp) + " °F)";
+
+  document.getElementById("humidity").textContent = plant.humidity;
+  document.getElementById("soil").textContent = plant.soil;
+
+  // common problems, one li for each
+  const problemList = document.getElementById("problems");
+  for (let i = 0; i < plant.problems.length; i++) {
+    const li = document.createElement("li");
+    li.innerHTML = "<strong>" + plant.problems[i].problem + ":</strong> " + plant.problems[i].solution;
+    problemList.appendChild(li);
+  }
 }
 
 // next watering, from the day it was last watered

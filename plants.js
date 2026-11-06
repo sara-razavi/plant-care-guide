@@ -1,5 +1,5 @@
 // plant data for the details page, copied from database.sql
-// not all the columns yet, adding them when the page needs them
+// problems are from the problems table
 
 const plants = [
   {
@@ -11,7 +11,14 @@ const plants = [
     light: "Bright indirect light, no harsh direct sun",
     min_temp: 18,
     max_temp: 30,
-    care_instructions: "Let the top few cm of soil dry before watering again. Wipe the leaves sometimes and give it a moss pole when it starts to climb."
+    humidity: "Medium to high (50-60%)",
+    soil: "Well draining potting mix with some perlite and bark",
+    care_instructions: "Let the top few cm of soil dry before watering again. Wipe the leaves sometimes and give it a moss pole when it starts to climb.",
+    problems: [
+      { problem: "Yellow leaves", solution: "Usually too much water. Let the soil dry more between waterings." },
+      { problem: "Brown crispy edges", solution: "Air is too dry or it stayed dry for too long." },
+      { problem: "New leaves have no splits", solution: "Not enough light, move it closer to a window. Young plants don't split yet." }
+    ]
   },
   {
     name: "Snake Plant",
@@ -22,7 +29,13 @@ const plants = [
     light: "Low to bright indirect light",
     min_temp: 15,
     max_temp: 29,
-    care_instructions: "Overwatering is the main thing that kills it. In winter water it even less, around once a month."
+    humidity: "Normal room humidity is fine",
+    soil: "Cactus or succulent mix with good drainage",
+    care_instructions: "Overwatering is the main thing that kills it. In winter water it even less, around once a month.",
+    problems: [
+      { problem: "Soft mushy leaves", solution: "Root rot from overwatering. Cut off the bad parts and repot in dry soil." },
+      { problem: "Leaves falling over", solution: "Too much water or not enough light." }
+    ]
   },
   {
     name: "Pothos",
@@ -33,7 +46,14 @@ const plants = [
     light: "Medium to bright indirect light, it survives in low light too",
     min_temp: 15,
     max_temp: 29,
-    care_instructions: "The leaves droop a little when it's thirsty. Cut long vines to make it fuller, the cuttings grow roots in water."
+    humidity: "Normal room humidity",
+    soil: "Regular potting mix",
+    care_instructions: "The leaves droop a little when it's thirsty. Cut long vines to make it fuller, the cuttings grow roots in water.",
+    problems: [
+      { problem: "Yellow leaves", solution: "Too much water, let the top of the soil dry first." },
+      { problem: "Long vines with few leaves", solution: "Not enough light. Move it somewhere brighter and trim the vines." },
+      { problem: "Brown crispy leaves", solution: "It's too dry, water a bit more often." }
+    ]
   },
   {
     name: "Peace Lily",
@@ -44,7 +64,14 @@ const plants = [
     light: "Medium to bright indirect light",
     min_temp: 18,
     max_temp: 27,
-    care_instructions: "Don't let it sit in water. Wipe the big leaves when they get dusty and cut old flowers off at the base."
+    humidity: "Medium to high",
+    soil: "Rich potting mix that holds some water",
+    care_instructions: "Don't let it sit in water. Wipe the big leaves when they get dusty and cut old flowers off at the base.",
+    problems: [
+      { problem: "Drooping leaves", solution: "It needs water, usually comes back a few hours after watering." },
+      { problem: "No flowers", solution: "Not enough light, move it to a brighter spot." },
+      { problem: "Brown leaf tips", solution: "Dry air or chemicals in tap water. Try filtered water." }
+    ]
   },
   {
     name: "Spider Plant",
@@ -55,7 +82,14 @@ const plants = [
     light: "Bright indirect light",
     min_temp: 13,
     max_temp: 27,
-    care_instructions: "Brown tips happen sometimes, tap water can cause it. You can cut the babies off and plant them in their own pots."
+    humidity: "Normal room humidity",
+    soil: "Regular well draining potting mix",
+    care_instructions: "Brown tips happen sometimes, tap water can cause it. You can cut the babies off and plant them in their own pots.",
+    problems: [
+      { problem: "Brown tips", solution: "Fluoride in tap water or dry air. Use filtered or rain water." },
+      { problem: "Pale faded leaves", solution: "Too much direct sun." },
+      { problem: "No baby plants", solution: "Plant is still young or needs more light." }
+    ]
   },
   {
     name: "Aloe Vera",
@@ -66,7 +100,14 @@ const plants = [
     light: "Bright light, a few hours of direct sun is ok",
     min_temp: 13,
     max_temp: 27,
-    care_instructions: "Use a pot with a drainage hole, it rots if the roots stay wet. Water less in winter."
+    humidity: "Low, dry air is fine",
+    soil: "Cactus or succulent mix",
+    care_instructions: "Use a pot with a drainage hole, it rots if the roots stay wet. Water less in winter.",
+    problems: [
+      { problem: "Soft brown leaves", solution: "Too much water, let the soil dry out completely." },
+      { problem: "Thin curling leaves", solution: "It's thirsty, give it a good drink." },
+      { problem: "Stretched pale growth", solution: "Not enough light." }
+    ]
   },
   {
     name: "ZZ Plant",
@@ -77,7 +118,13 @@ const plants = [
     light: "Low to bright indirect light",
     min_temp: 15,
     max_temp: 26,
-    care_instructions: "Yellow leaves usually mean too much water. It grows slowly so don't worry if nothing happens for a while."
+    humidity: "Normal room humidity",
+    soil: "Well draining potting mix",
+    care_instructions: "Yellow leaves usually mean too much water. It grows slowly so don't worry if nothing happens for a while.",
+    problems: [
+      { problem: "Yellow leaves", solution: "Too much water, let it dry out completely." },
+      { problem: "Wrinkled stems", solution: "It's very thirsty, water it." }
+    ]
   },
   {
     name: "Rubber Plant",
@@ -88,7 +135,14 @@ const plants = [
     light: "Bright indirect light",
     min_temp: 16,
     max_temp: 27,
-    care_instructions: "Wipe the leaves with a wet cloth sometimes. The white sap can irritate skin so be careful when you cut it."
+    humidity: "Medium",
+    soil: "Well draining potting mix",
+    care_instructions: "Wipe the leaves with a wet cloth sometimes. The white sap can irritate skin so be careful when you cut it.",
+    problems: [
+      { problem: "Dropping leaves", solution: "Sudden change in temperature or light, or too much water." },
+      { problem: "Yellow leaves", solution: "Too much water." },
+      { problem: "Drooping leaves", solution: "Needs water or the room is too cold." }
+    ]
   },
   {
     name: "Fiddle Leaf Fig",
@@ -99,7 +153,14 @@ const plants = [
     light: "Lots of bright indirect light, some morning sun is good",
     min_temp: 16,
     max_temp: 27,
-    care_instructions: "It doesn't like being moved or cold drafts and can drop leaves. Turn the pot every few weeks so it grows straight."
+    humidity: "Medium (40-60%)",
+    soil: "Well draining indoor plant mix",
+    care_instructions: "It doesn't like being moved or cold drafts and can drop leaves. Turn the pot every few weeks so it grows straight.",
+    problems: [
+      { problem: "Brown spots on leaves", solution: "Usually root rot from too much water." },
+      { problem: "Dropping leaves", solution: "It was moved or it's near a cold draft." },
+      { problem: "Small leaves and long stems", solution: "Not enough light." }
+    ]
   },
   {
     name: "Jade Plant",
@@ -110,7 +171,14 @@ const plants = [
     light: "Bright light, a few hours of direct sun is good",
     min_temp: 13,
     max_temp: 27,
-    care_instructions: "Wrinkly leaves mean it needs water, soft yellow leaves mean too much water. Water less in winter."
+    humidity: "Low, dry air is fine",
+    soil: "Cactus or succulent mix",
+    care_instructions: "Wrinkly leaves mean it needs water, soft yellow leaves mean too much water. Water less in winter.",
+    problems: [
+      { problem: "Wrinkled leaves", solution: "It needs water." },
+      { problem: "Soft yellow leaves", solution: "Too much water." },
+      { problem: "Leaves falling off", solution: "Too much or too little water, or it's too cold." }
+    ]
   },
   {
     name: "Boston Fern",
@@ -121,7 +189,14 @@ const plants = [
     light: "Bright indirect light, no direct sun",
     min_temp: 16,
     max_temp: 24,
-    care_instructions: "Needs humid air, a bathroom with a window is a good spot. Brown crispy fronds mean the air or soil is too dry."
+    humidity: "High (above 50%)",
+    soil: "Peat based mix that holds water",
+    care_instructions: "Needs humid air, a bathroom with a window is a good spot. Brown crispy fronds mean the air or soil is too dry.",
+    problems: [
+      { problem: "Brown crispy fronds", solution: "Air is too dry, raise the humidity." },
+      { problem: "Yellow fronds", solution: "Too much or too little water, check the soil." },
+      { problem: "Leaflets dropping", solution: "Not enough humidity or light." }
+    ]
   },
   {
     name: "Moth Orchid",
@@ -132,6 +207,13 @@ const plants = [
     light: "Bright indirect light, no direct sun",
     min_temp: 18,
     max_temp: 29,
-    care_instructions: "Roots look green after watering and silver when they are dry. When the flowers fall you can cut the stem above a node."
+    humidity: "Medium to high (50-70%)",
+    soil: "Orchid bark mix, not normal soil",
+    care_instructions: "Roots look green after watering and silver when they are dry. When the flowers fall you can cut the stem above a node.",
+    problems: [
+      { problem: "Wrinkled leaves", solution: "Not enough water or the roots are damaged." },
+      { problem: "Mushy brown roots", solution: "Root rot. Cut the rotten roots and repot in fresh bark." },
+      { problem: "Won't flower again", solution: "Needs more light, or a bit cooler nights to start blooming." }
+    ]
   }
 ];
