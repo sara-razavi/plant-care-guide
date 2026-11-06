@@ -21,6 +21,10 @@ function wateringText(days) {
   return "Every " + days + " days";
 }
 
+function toFahrenheit(c) {
+  return Math.round(c * 9 / 5 + 32);
+}
+
 // wrong or missing name in the url
 if (plant == null) {
   document.title = "Plant not found - Plant Care Guide";
@@ -36,6 +40,10 @@ if (plant == null) {
 
   document.getElementById("water-amount").textContent = plant.water_amount;
   document.getElementById("watering-days").textContent = wateringText(plant.watering_days);
+
+  document.getElementById("light").textContent = plant.light;
+  document.getElementById("temperature").textContent = plant.min_temp + " to " + plant.max_temp + " °C (" +
+    toFahrenheit(plant.min_temp) + " to " + toFahrenheit(plant.max_temp) + " °F)";
 }
 
 // next watering, from the day it was last watered
@@ -61,5 +69,30 @@ lastWatered.addEventListener("change", function () {
     nextWatering.textContent = "Water it today!";
   } else {
     nextWatering.textContent = "Watering is " + (-daysLeft) + " days late, water it now!";
+  }
+});
+
+// is the room ok for this plant?
+const roomTemp = document.getElementById("room-temp");
+const tempResult = document.getElementById("temp-result");
+
+document.getElementById("check-temp").addEventListener("click", function () {
+  if (roomTemp.value == "") {
+    tempResult.textContent = "Type your room temperature first.";
+    tempResult.style.color = "#777";
+    return;
+  }
+
+  const temp = Number(roomTemp.value);
+
+  if (temp < plant.min_temp) {
+    tempResult.textContent = "Too cold for it, it needs at least " + plant.min_temp + " °C.";
+    tempResult.style.color = "#b03a2e";
+  } else if (temp > plant.max_temp) {
+    tempResult.textContent = "Too hot for it, try to keep it at " + plant.max_temp + " °C or less.";
+    tempResult.style.color = "#b03a2e";
+  } else {
+    tempResult.textContent = "Good, " + plant.name + " is fine at this temperature.";
+    tempResult.style.color = "#2e5e3e";
   }
 });

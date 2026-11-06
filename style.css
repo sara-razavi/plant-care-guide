@@ -179,3 +179,29 @@ footer {
   font-weight: bold;
   color: #2e5e3e;
 }
+
+#room-temp {
+  width: 80px;
+  padding: 6px;
+  font-size: 15px;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+}
+
+#check-temp {
+  padding: 7px 14px;
+  font-size: 15px;
+  background-color: #2e5e3e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#check-temp:hover {
+  background-color: #3e7a51;
+}
+
+#temp-result {
+  font-weight: bold;
+}
