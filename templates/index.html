@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plant Care Guide</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <nav>
+    <a href="/">Home</a>
+    <a href="#plants">Plants</a>
+    <a href="#tips">Tips</a>
+    <a href="#about">About</a>
+  </nav>
+
+  <header>
+    <h1>Plant Care Guide</h1>
+    <p>What plant do you have? Search for it below and see how to take care of it.</p>
+  </header>
+
+  <main>
+    <section id="plants">
+      <h2>Plants</h2>
+
+      <input type="text" id="search" placeholder="Search a plant, e.g. monstera">
+      <p id="no-result">No plant found, try another name.</p>
+
+      <!-- cards are made in script.js, the data comes from /api/plants -->
+      <div class="plant-list" id="plant-list"></div>
+    </section>
+
+    <section id="tips">
+      <h2>Basic Tips</h2>
+      <ul>
+        <li>Check the soil with your finger before watering. If the top is still wet, wait a few more days.</li>
+        <li>Too much water kills more house plants than too little.</li>
+        <li>Use pots with drainage holes so the roots don't sit in water.</li>
+        <li>"Bright indirect light" means near a window, but not in the direct sun.</li>
+        <li>Most plants grow slower in winter so they need less water.</li>
+        <li>Wipe dusty leaves with a wet cloth, the dust blocks light.</li>
+      </ul>
+    </section>
+
+    <section id="about">
+      <h2>About</h2>
+      <p>I made this to keep care info for common house plants in one place, instead of searching it again every time. Right now there are 12 plants.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Sara Razavi</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

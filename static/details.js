@@ -1,16 +1,10 @@
 // details page, the plant name comes from the url
-// e.g. plant.html?name=Monstera
+// e.g. /plant?name=Monstera
 
 const params = new URLSearchParams(window.location.search);
 const plantName = params.get("name");
 
 let plant = null;
-for (let i = 0; i < plants.length; i++) {
-  // ignore upper/lower case so ?name=monstera works too
-  if (plantName != null && plants[i].name.toLowerCase() == plantName.toLowerCase()) {
-    plant = plants[i];
-  }
-}
 
 function wateringText(days) {
   if (days == 7) {
@@ -25,13 +19,14 @@ function toFahrenheit(c) {
   return Math.round(c * 9 / 5 + 32);
 }
 
-// wrong or missing name in the url
-if (plant == null) {
+function showNotFound() {
   document.title = "Plant not found - Plant Care Guide";
   document.getElementById("plant-name").textContent = "Plant not found";
   document.getElementById("plant-info").style.display = "none";
   document.getElementById("not-found").style.display = "block";
-} else {
+}
+
+function showPlant() {
   document.title = plant.name + " - Plant Care Guide";
   document.getElementById("plant-name").textContent = plant.name;
   document.getElementById("sci-name").textContent = plant.scientific_name;
@@ -56,6 +51,24 @@ if (plant == null) {
     problemList.appendChild(li);
   }
 }
+
+// ask the backend for this plant
+fetch("/api/plants/" + plantName)
+  .then(function (response) {
+    // 404 = no plant with this name (or no name at all)
+    if (response.status == 404) {
+      return null;
+    }
+    return response.json();
+  })
+  .then(function (data) {
+    if (data == null) {
+      showNotFound();
+    } else {
+      plant = data;
+      showPlant();
+    }
+  });
 
 // next watering, from the day it was last watered
 const lastWatered = document.getElementById("last-watered");

@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plant Care Guide</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
   <nav>
-    <a href="index.html">Home</a>
-    <a href="index.html#plants">Plants</a>
-    <a href="index.html#tips">Tips</a>
-    <a href="index.html#about">About</a>
+    <a href="/">Home</a>
+    <a href="/#plants">Plants</a>
+    <a href="/#tips">Tips</a>
+    <a href="/#about">About</a>
   </nav>
 
   <!-- empty here, details.js fills it -->
@@ -22,7 +22,7 @@
   </header>
 
   <main class="details">
-    <a href="index.html" class="back">&larr; Back to all plants</a>
+    <a href="/" class="back">&larr; Back to all plants</a>
 
     <!-- only shown when the name in the url is wrong -->
     <section id="not-found" class="info">
@@ -82,7 +82,6 @@
     <p>&copy; 2026 Sara Razavi</p>
   </footer>
 
-  <script src="plants.js"></script>
-  <script src="details.js"></script>
+  <script src="{{ url_for('static', filename='details.js') }}"></script>
 </body>
 </html>
