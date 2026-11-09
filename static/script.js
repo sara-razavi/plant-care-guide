@@ -17,11 +17,17 @@ fetch("/api/plants")
         '<p class="sci-name">' + plants[i].scientific_name + "</p>" +
         "<p>" + plants[i].description + "</p>" +
         '<a href="/plant?name=' + plants[i].name + '">See care guide</a>';
+
+      // the whole card opens the plant, not only the link
+      card.addEventListener("click", function () {
+        window.location.href = "/plant?name=" + plants[i].name;
+      });
+
       plantList.appendChild(card);
     }
   });
 
-searchInput.addEventListener("input", function () {
+function searchPlants() {
   const text = searchInput.value.toLowerCase();
   // get the cards here, they don't exist yet when the page loads
   const cards = document.querySelectorAll(".plant-card");
@@ -44,5 +50,26 @@ searchInput.addEventListener("input", function () {
     noResult.style.display = "block";
   } else {
     noResult.style.display = "none";
+  }
+}
+
+searchInput.addEventListener("input", searchPlants);
+
+searchInput.addEventListener("keydown", function (event) {
+  // enter opens the first plant that is still showing
+  if (event.key == "Enter" && searchInput.value != "") {
+    const cards = document.querySelectorAll(".plant-card");
+    for (let i = 0; i < cards.length; i++) {
+      if (cards[i].style.display != "none") {
+        cards[i].click();
+        break;
+      }
+    }
+  }
+
+  // esc clears the search
+  if (event.key == "Escape") {
+    searchInput.value = "";
+    searchPlants();
   }
 });

@@ -93,6 +93,12 @@ h2 {
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 8px;
+  cursor: pointer;
+}
+
+.plant-card:hover {
+  border-color: #2e5e3e;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .plant-card h3 {
@@ -188,7 +194,7 @@ footer {
   border-radius: 5px;
 }
 
-#check-temp {
+#check-temp, #watered-today {
   padding: 7px 14px;
   font-size: 15px;
   background-color: #2e5e3e;
@@ -198,7 +204,7 @@ footer {
   cursor: pointer;
 }
 
-#check-temp:hover {
+#check-temp:hover, #watered-today:hover {
   background-color: #3e7a51;
 }
 
@@ -207,9 +213,36 @@ footer {
 }
 
 #problems {
-  padding-left: 20px;
+  list-style: none;
+  padding-left: 0;
 }
 
 #problems li {
   margin-bottom: 10px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#problems li:hover {
+  background-color: #f4f8f3;
+}
+
+/* + when closed, - when open */
+#problems li strong::before {
+  content: "+ ";
+}
+
+#problems li.open strong::before {
+  content: "- ";
+}
+
+.solution {
+  display: none;
+  margin: 8px 0 0 0;
+}
+
+#problems li.open .solution {
+  display: block;
 }

@@ -43,12 +43,23 @@ function showPlant() {
   document.getElementById("humidity").textContent = plant.humidity;
   document.getElementById("soil").textContent = plant.soil;
 
-  // common problems, one li for each
+  // common problems, click one to see the solution
   const problemList = document.getElementById("problems");
   for (let i = 0; i < plant.problems.length; i++) {
     const li = document.createElement("li");
-    li.innerHTML = "<strong>" + plant.problems[i].problem + ":</strong> " + plant.problems[i].solution;
+    li.innerHTML = "<strong>" + plant.problems[i].problem + "</strong>" +
+      '<p class="solution">' + plant.problems[i].solution + "</p>";
+    li.addEventListener("click", function () {
+      li.classList.toggle("open");
+    });
     problemList.appendChild(li);
+  }
+
+  // the watering date saved from last time (if there is one)
+  const saved = localStorage.getItem("watered_" + plant.name);
+  if (saved != null) {
+    lastWatered.value = saved;
+    showNextWatering();
   }
 }
 
@@ -74,7 +85,7 @@ fetch("/api/plants/" + plantName)
 const lastWatered = document.getElementById("last-watered");
 const nextWatering = document.getElementById("next-watering");
 
-lastWatered.addEventListener("change", function () {
+function showNextWatering() {
   if (lastWatered.value == "") {
     nextWatering.textContent = "";
     return;
@@ -94,6 +105,22 @@ lastWatered.addEventListener("change", function () {
   } else {
     nextWatering.textContent = "Watering is " + (-daysLeft) + " days late, water it now!";
   }
+}
+
+lastWatered.addEventListener("change", function () {
+  // remember it for this plant, so it's still there next time
+  if (lastWatered.value == "") {
+    localStorage.removeItem("watered_" + plant.name);
+  } else {
+    localStorage.setItem("watered_" + plant.name, lastWatered.value);
+  }
+  showNextWatering();
+});
+
+document.getElementById("watered-today").addEventListener("click", function () {
+  lastWatered.value = new Date().toISOString().slice(0, 10);
+  localStorage.setItem("watered_" + plant.name, lastWatered.value);
+  showNextWatering();
 });
 
 // is the room ok for this plant?
@@ -118,5 +145,12 @@ document.getElementById("check-temp").addEventListener("click", function () {
   } else {
     tempResult.textContent = "Good, " + plant.name + " is fine at this temperature.";
     tempResult.style.color = "#2e5e3e";
+  }
+});
+
+// enter works too, not only the button
+roomTemp.addEventListener("keydown", function (event) {
+  if (event.key == "Enter") {
+    document.getElementById("check-temp").click();
   }
 });
