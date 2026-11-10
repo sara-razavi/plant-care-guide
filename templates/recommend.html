@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find a Plant - Plant Care Guide</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <nav>
+    <a href="/">Home</a>
+    <a href="/#plants">Plants</a>
+    <a href="/recommend">Find a Plant</a>
+    <a href="/#tips">Tips</a>
+    <a href="/#about">About</a>
+  </nav>
+
+  <header>
+    <h1>Which plant fits your home?</h1>
+    <p>Answer a few questions and see the plants that would be happy at your place.</p>
+  </header>
+
+  <main class="details">
+    <section class="info">
+      <h2>Your Home</h2>
+
+      <label for="light">How much light does the spot get?</label>
+      <select id="light">
+        <option value="1">Low, far from a window</option>
+        <option value="2">Medium, a few meters from a window</option>
+        <option value="3" selected>Bright, near a window but no direct sun</option>
+        <option value="4">Some direct sun on the plant</option>
+      </select>
+
+      <label for="water">How often can you water?</label>
+      <select id="water">
+        <option value="3">Every few days</option>
+        <option value="7" selected>About once a week</option>
+        <option value="14">Every two weeks or less</option>
+      </select>
+
+      <label for="dry">Is the air in your home dry? (heaters in winter, dry city)</label>
+      <select id="dry">
+        <option value="no">No, or not sure</option>
+        <option value="yes">Yes</option>
+      </select>
+
+      <label for="temp">Usual room temperature in &deg;C (you can leave it empty)</label>
+      <input type="number" id="temp" placeholder="e.g. 22">
+
+      <button id="recommend-btn">Show plants</button>
+    </section>
+
+    <!-- hidden until the first search -->
+    <section id="results" class="info">
+      <h2>Plants for You</h2>
+      <ul id="care-tips"></ul>
+      <p id="result-count"></p>
+      <div class="plant-list" id="result-list"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Sara Razavi</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='recommend.js') }}"></script>
+</body>
+</html>

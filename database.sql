@@ -17,7 +17,11 @@ CREATE TABLE plants (
     max_temp INT,
     humidity VARCHAR(50),
     soil VARCHAR(100),
-    care_instructions TEXT
+    care_instructions TEXT,
+    -- numbers for the recommendations, the text columns are hard to compare
+    min_light INT, -- 1 low, 2 medium, 3 bright indirect, 4 some direct sun
+    max_light INT,
+    likes_humid BOOLEAN DEFAULT false
 );
 
 -- one plant can have a few problems, so separate table
@@ -152,6 +156,20 @@ INSERT INTO problems (plant_id, problem, solution) VALUES
 (12, 'Wrinkled leaves', 'Not enough water or the roots are damaged.'),
 (12, 'Mushy brown roots', 'Root rot. Cut the rotten roots and repot in fresh bark.'),
 (12, 'Won''t flower again', 'Needs more light, or a bit cooler nights to start blooming.');
+
+-- light and humidity for the recommendations (same info as the text above)
+UPDATE plants SET min_light = 3, max_light = 3, likes_humid = true WHERE name = 'Monstera';
+UPDATE plants SET min_light = 1, max_light = 3 WHERE name = 'Snake Plant';
+UPDATE plants SET min_light = 1, max_light = 3 WHERE name = 'Pothos';
+UPDATE plants SET min_light = 2, max_light = 3, likes_humid = true WHERE name = 'Peace Lily';
+UPDATE plants SET min_light = 3, max_light = 3 WHERE name = 'Spider Plant';
+UPDATE plants SET min_light = 3, max_light = 4 WHERE name = 'Aloe Vera';
+UPDATE plants SET min_light = 1, max_light = 3 WHERE name = 'ZZ Plant';
+UPDATE plants SET min_light = 3, max_light = 3 WHERE name = 'Rubber Plant';
+UPDATE plants SET min_light = 3, max_light = 4 WHERE name = 'Fiddle Leaf Fig';
+UPDATE plants SET min_light = 3, max_light = 4 WHERE name = 'Jade Plant';
+UPDATE plants SET min_light = 3, max_light = 3, likes_humid = true WHERE name = 'Boston Fern';
+UPDATE plants SET min_light = 3, max_light = 3, likes_humid = true WHERE name = 'Moth Orchid';
 
 -- SELECT * FROM plants;
 -- SELECT * FROM problems WHERE plant_id = 1;

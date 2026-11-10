@@ -194,7 +194,7 @@ footer {
   border-radius: 5px;
 }
 
-#check-temp, #watered-today {
+#check-temp, #watered-today, #recommend-btn {
   padding: 7px 14px;
   font-size: 15px;
   background-color: #2e5e3e;
@@ -204,7 +204,7 @@ footer {
   cursor: pointer;
 }
 
-#check-temp:hover, #watered-today:hover {
+#check-temp:hover, #watered-today:hover, #recommend-btn:hover {
   background-color: #3e7a51;
 }
 
@@ -245,4 +245,34 @@ footer {
 
 #problems li.open .solution {
   display: block;
+}
+
+/* recommend page */
+.info select, #temp {
+  display: block;
+  padding: 6px;
+  font-size: 15px;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+#recommend-btn {
+  margin-bottom: 15px;
+}
+
+#results {
+  display: none;
+}
+
+#care-tips {
+  padding-left: 20px;
+}
+
+#care-tips li {
+  margin-bottom: 8px;
+}
+
+#result-count {
+  font-weight: bold;
 }
