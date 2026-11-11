@@ -9,6 +9,7 @@ A website where you pick a house plant and see how to take care of it: how much 
 3. The home page gets the list with `fetch` and makes a card for every plant. The search box filters the cards by name or scientific name
 4. Clicking a card opens the plant page with all the care info for that plant
 5. On the plant page you can enter the day you last watered it to see the next watering day (the browser remembers it), check if your room temperature is ok for the plant, and click a common problem to see what to do
+6. The Find a Plant page (`/recommend`) asks how much light the spot gets, how often you can water, if the air is dry, and the room temperature (optional). Then `/api/recommend` picks the plants that fit from the database and adds a few care tips
 
 ## Tech
 
@@ -25,11 +26,13 @@ A website where you pick a house plant and see how to take care of it: how much 
 ├── requirements.txt
 ├── templates/
 │   ├── index.html
-│   └── plant.html
+│   ├── plant.html
+│   └── recommend.html
 └── static/
     ├── style.css
     ├── script.js
-    └── details.js
+    ├── details.js
+    └── recommend.js
 ```
 
 ## How to run
