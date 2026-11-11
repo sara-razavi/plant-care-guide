@@ -10,6 +10,13 @@ def get_connection():
     return conn
 
 
+# postgres not running: send a short json error, not the big html error page
+@app.errorhandler(psycopg2.OperationalError)
+def database_error(error):
+    print("database error:", error)
+    return jsonify({"error": "can't connect to the database, is postgres running?"}), 500
+
+
 @app.route("/")
 def home():
     return render_template("index.html")

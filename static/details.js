@@ -19,11 +19,41 @@ function toFahrenheit(c) {
   return Math.round(c * 9 / 5 + 32);
 }
 
+// "1 day" not "1 days"
+function daysText(n) {
+  if (n == 1) {
+    return "1 day";
+  }
+  return n + " days";
+}
+
+// new Date("2026-11-05") is midnight in UTC, that's 3:30 in the morning here,
+// so after midnight the days were wrong. this makes the date in local time
+function toLocalDate(text) {
+  const parts = text.split("-");
+  return new Date(parts[0], parts[1] - 1, parts[2]);
+}
+
+// same problem with toISOString(), it gives the UTC date
+function todayText() {
+  const d = new Date();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return d.getFullYear() + "-" + month + "-" + day;
+}
+
 function showNotFound() {
   document.title = "Plant not found - Plant Care Guide";
   document.getElementById("plant-name").textContent = "Plant not found";
   document.getElementById("plant-info").style.display = "none";
   document.getElementById("not-found").style.display = "block";
+}
+
+function showError() {
+  document.title = "Error - Plant Care Guide";
+  document.getElementById("plant-name").textContent = "Something went wrong";
+  document.getElementById("plant-info").style.display = "none";
+  document.getElementById("load-error").style.display = "block";
 }
 
 function showPlant() {
@@ -70,6 +100,9 @@ fetch("/api/plants/" + plantName)
     if (response.status == 404) {
       return null;
     }
+    if (!response.ok) {
+      throw new Error("server error " + response.status);
+    }
     return response.json();
   })
   .then(function (data) {
@@ -79,6 +112,10 @@ fetch("/api/plants/" + plantName)
       plant = data;
       showPlant();
     }
+  })
+  .catch(function () {
+    // usually postgres is not running, before the page just stayed empty
+    showError();
   });
 
 // next watering, from the day it was last watered
@@ -91,19 +128,21 @@ function showNextWatering() {
     return;
   }
 
-  const last = new Date(lastWatered.value);
+  const last = toLocalDate(lastWatered.value);
   const next = new Date(last);
   next.setDate(next.getDate() + plant.watering_days);
 
+  // compare whole days, the time of day doesn't matter
   const today = new Date();
-  const daysLeft = Math.ceil((next - today) / (1000 * 60 * 60 * 24));
+  today.setHours(0, 0, 0, 0);
+  const daysLeft = Math.round((next - today) / (1000 * 60 * 60 * 24));
 
   if (daysLeft > 0) {
-    nextWatering.textContent = "Next watering: " + next.toDateString() + " (in " + daysLeft + " days)";
+    nextWatering.textContent = "Next watering: " + next.toDateString() + " (in " + daysText(daysLeft) + ")";
   } else if (daysLeft == 0) {
     nextWatering.textContent = "Water it today!";
   } else {
-    nextWatering.textContent = "Watering is " + (-daysLeft) + " days late, water it now!";
+    nextWatering.textContent = "Watering is " + daysText(-daysLeft) + " late, water it now!";
   }
 }
 
@@ -118,7 +157,7 @@ lastWatered.addEventListener("change", function () {
 });
 
 document.getElementById("watered-today").addEventListener("click", function () {
-  lastWatered.value = new Date().toISOString().slice(0, 10);
+  lastWatered.value = todayText();
   localStorage.setItem("watered_" + plant.name, lastWatered.value);
   showNextWatering();
 });

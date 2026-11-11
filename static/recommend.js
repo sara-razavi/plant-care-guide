@@ -15,6 +15,9 @@ document.getElementById("recommend-btn").addEventListener("click", function () {
 
   fetch(url)
     .then(function (response) {
+      if (!response.ok) {
+        throw new Error("server error " + response.status);
+      }
       return response.json();
     })
     .then(function (data) {
@@ -30,6 +33,8 @@ document.getElementById("recommend-btn").addEventListener("click", function () {
 
       if (data.plants.length == 0) {
         resultCount.textContent = "No plant fits all of these, try changing an answer.";
+      } else if (data.plants.length == 1) {
+        resultCount.textContent = "1 plant fits your home:";
       } else {
         resultCount.textContent = data.plants.length + " plants fit your home:";
       }
@@ -50,6 +55,12 @@ document.getElementById("recommend-btn").addEventListener("click", function () {
         resultList.appendChild(card);
       }
 
+      resultsBox.style.display = "block";
+    })
+    .catch(function () {
+      resultList.innerHTML = "";
+      tipList.innerHTML = "";
+      resultCount.textContent = "Something went wrong, the database might not be running.";
       resultsBox.style.display = "block";
     });
 });

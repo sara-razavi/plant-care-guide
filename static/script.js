@@ -7,6 +7,9 @@ const noResult = document.getElementById("no-result");
 
 fetch("/api/plants")
   .then(function (response) {
+    if (!response.ok) {
+      throw new Error("server error " + response.status);
+    }
     return response.json();
   })
   .then(function (plants) {
@@ -25,10 +28,15 @@ fetch("/api/plants")
 
       plantList.appendChild(card);
     }
+  })
+  .catch(function () {
+    // postgres not running etc, show a message instead of an empty page
+    document.getElementById("load-error").style.display = "block";
   });
 
 function searchPlants() {
-  const text = searchInput.value.toLowerCase();
+  // trim, phone keyboards often add a space after the word
+  const text = searchInput.value.trim().toLowerCase();
   // get the cards here, they don't exist yet when the page loads
   const cards = document.querySelectorAll(".plant-card");
   let found = 0;
@@ -57,7 +65,7 @@ searchInput.addEventListener("input", searchPlants);
 
 searchInput.addEventListener("keydown", function (event) {
   // enter opens the first plant that is still showing
-  if (event.key == "Enter" && searchInput.value != "") {
+  if (event.key == "Enter" && searchInput.value.trim() != "") {
     const cards = document.querySelectorAll(".plant-card");
     for (let i = 0; i < cards.length; i++) {
       if (cards[i].style.display != "none") {

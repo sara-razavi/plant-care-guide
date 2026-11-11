@@ -159,8 +159,13 @@ footer {
   border-radius: 8px;
 }
 
-#not-found {
+#not-found, #load-error {
   display: none;
+}
+
+.error {
+  color: #b03a2e;
+  font-weight: bold;
 }
 
 .note {
@@ -255,6 +260,9 @@ footer {
   border: 1px solid #bbb;
   border-radius: 5px;
   margin-bottom: 15px;
+  /* long options made the select wider than small phones */
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 #recommend-btn {
@@ -275,4 +283,12 @@ footer {
 
 #result-count {
   font-weight: bold;
+}
+
+/* small phones, the cards were going out of the screen */
+@media (max-width: 400px) {
+  .plant-card {
+    width: 100%;
+    box-sizing: border-box;
+  }
 }
