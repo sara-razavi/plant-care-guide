@@ -2,6 +2,7 @@
 -- create the database first:  createdb plant_care
 -- then run this file:  psql -d plant_care -f database.sql
 
+DROP TABLE IF EXISTS photos;
 DROP TABLE IF EXISTS problems;
 DROP TABLE IF EXISTS plants;
 
@@ -30,6 +31,15 @@ CREATE TABLE problems (
     plant_id INT REFERENCES plants(id),
     problem VARCHAR(100),
     solution TEXT
+);
+
+-- photos that people upload of their own plant
+-- only the file name is here, the images are in static/uploads
+CREATE TABLE photos (
+    id SERIAL PRIMARY KEY,
+    plant_id INT REFERENCES plants(id),
+    filename VARCHAR(100),
+    uploaded_at TIMESTAMP DEFAULT NOW()
 );
 
 -- plants

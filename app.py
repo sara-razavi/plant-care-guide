@@ -1,7 +1,16 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, url_for
+from PIL import Image, ImageOps
+from datetime import datetime
 import psycopg2
+import os
 
 app = Flask(__name__)
+
+# photos from phones can be big, more than 10 MB gets a 413 error
+app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024
+
+UPLOAD_FOLDER = os.path.join("static", "uploads")
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
 def get_connection():
@@ -168,6 +177,68 @@ def recommend():
         })
 
     return jsonify({"plants": plants, "tips": get_tips(light, water, dry, temp)})
+
+
+@app.route("/api/plants/<name>/photos", methods=["POST"])
+def upload_photo(name):
+    if "photo" not in request.files or request.files["photo"].filename == "":
+        return jsonify({"error": "Choose a photo first."}), 400
+
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id, name FROM plants WHERE LOWER(name) = LOWER(%s)", (name,))
+    row = cur.fetchone()
+    if row == None:
+        cur.close()
+        conn.close()
+        return jsonify({"error": "plant not found"}), 404
+
+    # opening it with pillow also checks that it's really an image
+    try:
+        image = Image.open(request.files["photo"])
+        # phone photos came out sideways without this
+        image = ImageOps.exif_transpose(image)
+        image = image.convert("RGB")
+    except OSError:
+        cur.close()
+        conn.close()
+        return jsonify({"error": "This file is not an image (use jpg or png)."}), 400
+
+    # make it smaller, the gallery doesn't need a 4000px photo
+    image.thumbnail((800, 800))
+    filename = row[1].lower().replace(" ", "_") + "_" + datetime.now().strftime("%Y%m%d_%H%M%S_%f") + ".jpg"
+    image.save(os.path.join(UPLOAD_FOLDER, filename), "JPEG", quality=85)
+
+    cur.execute("INSERT INTO photos (plant_id, filename) VALUES (%s, %s)", (row[0], filename))
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    return jsonify({"url": url_for("static", filename="uploads/" + filename)}), 201
+
+
+@app.route("/api/plants/<name>/photos")
+def get_photos(name):
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT photos.filename, photos.uploaded_at
+        FROM photos JOIN plants ON plants.id = photos.plant_id
+        WHERE LOWER(plants.name) = LOWER(%s)
+        ORDER BY photos.uploaded_at DESC
+    """, (name,))
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    # newest first
+    result = []
+    for row in rows:
+        result.append({
+            "url": url_for("static", filename="uploads/" + row[0]),
+            "date": row[1].strftime("%Y-%m-%d %H:%M")
+        })
+    return jsonify(result)
 
 
 if __name__ == "__main__":

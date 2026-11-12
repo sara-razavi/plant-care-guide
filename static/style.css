@@ -199,7 +199,7 @@ footer {
   border-radius: 5px;
 }
 
-#check-temp, #watered-today, #recommend-btn {
+#check-temp, #watered-today, #recommend-btn, #upload-btn {
   padding: 7px 14px;
   font-size: 15px;
   background-color: #2e5e3e;
@@ -209,7 +209,7 @@ footer {
   cursor: pointer;
 }
 
-#check-temp:hover, #watered-today:hover, #recommend-btn:hover {
+#check-temp:hover, #watered-today:hover, #recommend-btn:hover, #upload-btn:hover {
   background-color: #3e7a51;
 }
 
@@ -285,10 +285,46 @@ footer {
   font-weight: bold;
 }
 
+/* photos on the plant page */
+#photo-input {
+  max-width: 100%;
+  margin-bottom: 10px;
+}
+
+#upload-result {
+  font-weight: bold;
+}
+
+#photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.photo img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.photo p {
+  font-size: 13px;
+  color: #777;
+  margin: 3px 0 0 0;
+}
+
 /* small phones, the cards were going out of the screen */
 @media (max-width: 400px) {
   .plant-card {
     width: 100%;
     box-sizing: border-box;
+  }
+
+  /* so 2 photos fit next to each other */
+  .photo img {
+    width: 130px;
+    height: 130px;
   }
 }

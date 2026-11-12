@@ -91,6 +91,33 @@ function showPlant() {
     lastWatered.value = saved;
     showNextWatering();
   }
+
+  loadPhotos();
+}
+
+// photos of this plant that were uploaded before
+function loadPhotos() {
+  fetch("/api/plants/" + plant.name + "/photos")
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (photos) {
+      const box = document.getElementById("photos");
+      box.innerHTML = "";
+
+      if (photos.length == 0) {
+        box.innerHTML = '<p class="note">No photos yet.</p>';
+        return;
+      }
+
+      for (let i = 0; i < photos.length; i++) {
+        const div = document.createElement("div");
+        div.className = "photo";
+        div.innerHTML = '<img src="' + photos[i].url + '" alt="' + plant.name + '">' +
+          "<p>" + photos[i].date + "</p>";
+        box.appendChild(div);
+      }
+    });
 }
 
 // ask the backend for this plant
@@ -192,4 +219,45 @@ roomTemp.addEventListener("keydown", function (event) {
   if (event.key == "Enter") {
     document.getElementById("check-temp").click();
   }
+});
+
+// upload a photo of your plant
+const photoInput = document.getElementById("photo-input");
+const uploadResult = document.getElementById("upload-result");
+
+document.getElementById("upload-btn").addEventListener("click", function () {
+  if (photoInput.files.length == 0) {
+    uploadResult.textContent = "Choose a photo first.";
+    uploadResult.style.color = "#777";
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("photo", photoInput.files[0]);
+  uploadResult.textContent = "Uploading...";
+  uploadResult.style.color = "#777";
+
+  fetch("/api/plants/" + plant.name + "/photos", { method: "POST", body: formData })
+    .then(function (response) {
+      // flask sends 413 as an html page, not json
+      if (response.status == 413) {
+        return { error: "The photo is too big, the limit is 10 MB." };
+      }
+      return response.json();
+    })
+    .then(function (data) {
+      if (data.error) {
+        uploadResult.textContent = data.error;
+        uploadResult.style.color = "#b03a2e";
+        return;
+      }
+      uploadResult.textContent = "Photo saved!";
+      uploadResult.style.color = "#2e5e3e";
+      photoInput.value = "";
+      loadPhotos();
+    })
+    .catch(function () {
+      uploadResult.textContent = "Something went wrong, try again.";
+      uploadResult.style.color = "#b03a2e";
+    });
 });
