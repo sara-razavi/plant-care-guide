@@ -315,6 +315,66 @@ footer {
   margin: 3px 0 0 0;
 }
 
+/* identify page */
+#identify-input {
+  max-width: 100%;
+  margin-bottom: 10px;
+}
+
+#preview {
+  display: none;
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+#identify-btn {
+  padding: 7px 14px;
+  font-size: 15px;
+  background-color: #2e5e3e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#identify-btn:hover {
+  background-color: #3e7a51;
+}
+
+#identify-result {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+#guesses {
+  list-style: none;
+  padding-left: 0;
+}
+
+#guesses li {
+  margin-bottom: 12px;
+}
+
+#guesses a {
+  color: #2e5e3e;
+  font-weight: bold;
+}
+
+.bar {
+  background-color: #e6eee4;
+  height: 10px;
+  border-radius: 5px;
+  margin-top: 4px;
+}
+
+.bar-fill {
+  background-color: #2e5e3e;
+  height: 10px;
+  border-radius: 5px;
+}
+
 /* small phones, the cards were going out of the screen */
 @media (max-width: 400px) {
   .plant-card {

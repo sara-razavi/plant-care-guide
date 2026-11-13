@@ -1,10 +1,16 @@
 from flask import Flask, render_template, jsonify, request, url_for
 from PIL import Image, ImageOps
 from datetime import datetime
+from identify import get_features
 import psycopg2
+import pickle
 import os
 
 app = Flask(__name__)
+
+# the knn model from train_model.py
+with open("model.pkl", "rb") as file:
+    model = pickle.load(file)
 
 # photos from phones can be big, more than 10 MB gets a 413 error
 app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024
@@ -40,6 +46,11 @@ def plant_page():
 @app.route("/recommend")
 def recommend_page():
     return render_template("recommend.html")
+
+
+@app.route("/identify")
+def identify_page():
+    return render_template("identify.html")
 
 
 @app.route("/api/plants")
@@ -239,6 +250,27 @@ def get_photos(name):
             "date": row[1].strftime("%Y-%m-%d %H:%M")
         })
     return jsonify(result)
+
+
+@app.route("/api/identify", methods=["POST"])
+def identify():
+    if "photo" not in request.files or request.files["photo"].filename == "":
+        return jsonify({"error": "Choose a photo first."}), 400
+
+    try:
+        features = get_features(Image.open(request.files["photo"]))
+    except OSError:
+        return jsonify({"error": "This file is not an image (use jpg or png)."}), 400
+
+    # how sure the model is for every plant, send the best 3
+    probs = model.predict_proba([features])[0]
+    best = probs.argsort()[::-1][:3]
+
+    guesses = []
+    for i in best:
+        if probs[i] > 0:
+            guesses.append({"name": model.classes_[i], "percent": round(probs[i] * 100)})
+    return jsonify({"guesses": guesses})
 
 
 if __name__ == "__main__":

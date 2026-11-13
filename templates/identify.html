@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Identify a Plant - Plant Care Guide</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <nav>
+    <a href="/">Home</a>
+    <a href="/#plants">Plants</a>
+    <a href="/recommend">Find a Plant</a>
+    <a href="/identify">Identify</a>
+    <a href="/#tips">Tips</a>
+    <a href="/#about">About</a>
+  </nav>
+
+  <header>
+    <h1>What plant is this?</h1>
+    <p>Upload a photo of a plant and see what it might be.</p>
+  </header>
+
+  <main class="details">
+    <section class="info">
+      <h2>Your Photo</h2>
+      <p class="note">It only knows the plants in this guide, and it's a simple model so it can be wrong. A photo of the whole plant in the middle works best.</p>
+
+      <input type="file" id="identify-input" accept="image/jpeg, image/png">
+      <img id="preview" alt="your photo">
+      <button id="identify-btn">Identify</button>
+      <p id="identify-result"></p>
+      <ul id="guesses"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Sara Razavi</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='identify.js') }}"></script>
+</body>
+</html>

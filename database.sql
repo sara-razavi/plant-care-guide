@@ -127,7 +127,22 @@ VALUES
  'Water well and let it drain, never leave it sitting in water', 7,
  'Bright indirect light, no direct sun', 18, 29,
  'Medium to high (50-70%)', 'Orchid bark mix, not normal soil',
- 'Roots look green after watering and silver when they are dry. When the flowers fall you can cut the stem above a node.');
+ 'Roots look green after watering and silver when they are dry. When the flowers fall you can cut the stem above a node.'),
+
+-- my own plants, added for the plant identification
+('Aglaonema', 'Aglaonema (red hybrid)',
+ 'Also called chinese evergreen. Green leaves with red edges and pink spots, it grows slowly and stays compact.',
+ 'Medium amount, water when the top few cm are dry', 7,
+ 'Medium to bright indirect light, red types need more light to keep the color', 16, 29,
+ 'Medium (40-60%)', 'Well draining potting mix',
+ 'Keep it away from cold windows and drafts, it doesn''t like it under 15 C. Wipe the leaves sometimes. The sap can irritate skin.'),
+
+('Zebra Haworthia', 'Haworthiopsis attenuata',
+ 'Small succulent with thick pointy leaves covered in white stripes, a bit like a tiny aloe.',
+ 'Small amount, only when the soil is completely dry', 14,
+ 'Bright light, some morning sun is ok', 10, 30,
+ 'Low, dry air is fine', 'Cactus or succulent mix',
+ 'Water even less in winter. Strong summer sun can turn the leaves red or brown. It grows slowly and makes small babies at the base.');
 
 -- common problems
 -- plant_id is the order of the plants above (1 = Monstera, 2 = Snake Plant ...)
@@ -165,7 +180,13 @@ INSERT INTO problems (plant_id, problem, solution) VALUES
 (11, 'Leaflets dropping', 'Not enough humidity or light.'),
 (12, 'Wrinkled leaves', 'Not enough water or the roots are damaged.'),
 (12, 'Mushy brown roots', 'Root rot. Cut the rotten roots and repot in fresh bark.'),
-(12, 'Won''t flower again', 'Needs more light, or a bit cooler nights to start blooming.');
+(12, 'Won''t flower again', 'Needs more light, or a bit cooler nights to start blooming.'),
+(13, 'Leaves losing the red color', 'Not enough light, move it to a brighter spot.'),
+(13, 'Brown leaf tips', 'Dry air or too much fertilizer.'),
+(13, 'Yellow lower leaves', 'Too much water, or just old leaves dying.'),
+(14, 'Soft mushy leaves', 'Too much water. Let it dry out completely and check the roots.'),
+(14, 'Leaves turning red or brown', 'Too much direct sun, move it a bit away from the window.'),
+(14, 'Thin wrinkled leaves', 'It needs water.');
 
 -- light and humidity for the recommendations (same info as the text above)
 UPDATE plants SET min_light = 3, max_light = 3, likes_humid = true WHERE name = 'Monstera';
@@ -180,6 +201,8 @@ UPDATE plants SET min_light = 3, max_light = 4 WHERE name = 'Fiddle Leaf Fig';
 UPDATE plants SET min_light = 3, max_light = 4 WHERE name = 'Jade Plant';
 UPDATE plants SET min_light = 3, max_light = 3, likes_humid = true WHERE name = 'Boston Fern';
 UPDATE plants SET min_light = 3, max_light = 3, likes_humid = true WHERE name = 'Moth Orchid';
+UPDATE plants SET min_light = 2, max_light = 3 WHERE name = 'Aglaonema';
+UPDATE plants SET min_light = 3, max_light = 4 WHERE name = 'Zebra Haworthia';
 
 -- SELECT * FROM plants;
 -- SELECT * FROM problems WHERE plant_id = 1;
