@@ -4,12 +4,13 @@ from datetime import datetime
 from identify import get_features
 import psycopg2
 import pickle
+import gzip
 import os
 
 app = Flask(__name__)
 
-# the knn model from train_model.py
-with open("model.pkl", "rb") as file:
+# the model from train_model.py (random forest now, it was better than knn)
+with gzip.open("model.pkl.gz", "rb") as file:
     model = pickle.load(file)
 
 # photos from phones can be big, more than 10 MB gets a 413 error

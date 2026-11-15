@@ -5,6 +5,11 @@ const plantList = document.getElementById("plant-list");
 const searchInput = document.getElementById("search");
 const noResult = document.getElementById("no-result");
 
+// "Snake Plant" -> /static/images/snake_plant.jpg
+function photoUrl(name) {
+  return "/static/images/" + name.toLowerCase().replaceAll(" ", "_") + ".jpg";
+}
+
 fetch("/api/plants")
   .then(function (response) {
     if (!response.ok) {
@@ -16,7 +21,8 @@ fetch("/api/plants")
     for (let i = 0; i < plants.length; i++) {
       const card = document.createElement("div");
       card.className = "plant-card";
-      card.innerHTML = "<h3>" + plants[i].name + "</h3>" +
+      card.innerHTML = '<img class="card-img" src="' + photoUrl(plants[i].name) + '" alt="' + plants[i].name + '">' +
+        "<h3>" + plants[i].name + "</h3>" +
         '<p class="sci-name">' + plants[i].scientific_name + "</p>" +
         "<p>" + plants[i].description + "</p>" +
         '<a href="/plant?name=' + plants[i].name + '">See care guide</a>';

@@ -5,6 +5,10 @@ const resultList = document.getElementById("result-list");
 const resultCount = document.getElementById("result-count");
 const tipList = document.getElementById("care-tips");
 
+function photoUrl(name) {
+  return "/static/images/" + name.toLowerCase().replaceAll(" ", "_") + ".jpg";
+}
+
 document.getElementById("recommend-btn").addEventListener("click", function () {
   const light = document.getElementById("light").value;
   const water = document.getElementById("water").value;
@@ -44,7 +48,8 @@ document.getElementById("recommend-btn").addEventListener("click", function () {
         const p = data.plants[i];
         const card = document.createElement("div");
         card.className = "plant-card";
-        card.innerHTML = "<h3>" + p.name + "</h3>" +
+        card.innerHTML = '<img class="card-img" src="' + photoUrl(p.name) + '" alt="' + p.name + '">' +
+          "<h3>" + p.name + "</h3>" +
           '<p class="sci-name">' + p.scientific_name + "</p>" +
           "<p>" + p.description + "</p>" +
           '<p class="note">Water every ' + p.watering_days + " days</p>" +

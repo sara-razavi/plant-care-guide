@@ -61,6 +61,9 @@ function showPlant() {
   document.getElementById("plant-name").textContent = plant.name;
   document.getElementById("sci-name").textContent = plant.scientific_name;
   document.getElementById("description").textContent = plant.description;
+  const photo = document.getElementById("plant-photo");
+  photo.src = "/static/images/" + plant.name.toLowerCase().replaceAll(" ", "_") + ".jpg";
+  photo.alt = plant.name;
   document.getElementById("care").textContent = plant.care_instructions;
 
   document.getElementById("water-amount").textContent = plant.water_amount;
